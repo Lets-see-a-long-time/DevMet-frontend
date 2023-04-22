@@ -3,6 +3,7 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
-}
+  apiFolder: "app/api",
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
