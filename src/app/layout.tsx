@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import "./globals.css";
 
 import { SessionProvider } from "next-auth/react";
@@ -11,6 +12,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <Link href={"/login"}>로그인으로가</Link>
         <SessionProvider>{children}</SessionProvider>
       </body>
     </html>

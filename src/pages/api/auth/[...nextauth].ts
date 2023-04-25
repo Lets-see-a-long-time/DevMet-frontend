@@ -3,6 +3,7 @@ import KakaoProvider from "next-auth/providers/kakao";
 import GithupProvider from "next-auth/providers/github";
 import NaverProvider from "next-auth/providers/naver";
 import GoogleProvider from "next-auth/providers/google";
+import { redirect } from "next/dist/server/api-utils";
 
 export default NextAuth({
   session: {
@@ -38,6 +39,11 @@ export default NextAuth({
 
       // console.log("token", token);
       return session;
+    },
+
+    async redirect({ url, baseUrl }) {
+      if (`${baseUrl}/api/auth/signout`) return baseUrl;
+      return `${baseUrl}/login/register`;
     },
   },
 });
