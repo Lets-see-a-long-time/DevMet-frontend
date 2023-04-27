@@ -12,7 +12,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Link href={"/login"}>로그인으로가</Link>
+        <Link href={"/auth"}>로그인으로가</Link>
         <SessionProvider>{children}</SessionProvider>
       </body>
     </html>
