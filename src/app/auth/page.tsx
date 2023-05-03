@@ -8,7 +8,7 @@ import { SessionTypes } from "@/types/SessionTypes";
 
 function Login() {
   const { data: session } = useSession();
-
+  
   return (
     <div>
       {session ? (

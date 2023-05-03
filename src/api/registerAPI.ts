@@ -8,7 +8,12 @@ const instance = axios.create({
   baseURL: "http://localhost:3001/auth",
 });
 
-export const registerUser = (userInfo: RegisterTypes) => {
-  const response = instance.post("/register", userInfo);
+export const registerUser = async(userInfo: RegisterTypes) => {
+  const response = await  instance.post("/register", userInfo);
+  return response;
+};
+
+export const test = async(userInfo: any) => {
+  const response = await  instance.post("/testing", userInfo);
   return response;
 };

@@ -33,15 +33,38 @@ export default NextAuth({
     }),
   ],
   callbacks: {
-    async session({ session, token, user }) {
-      return session;
-    },
-    async jwt({ token, user }: any) {
+    
+    async jwt({ token, user,account,profile }: any) {
+      // console.log('account',account)
+      // console.log('profile',profile)
+      if(account) {
+        token.accessToken = account.access_token
+        token.refreshToken = account.refresh_token
+      }
       if (token) {
         user = token;
       }
 
       return user;
     },
+    async session({ session, token, user }:any) {
+      // console.log('session',session)
+      if(token){
+      session.accessToken = token.accessToken
+      session.refreshToken = token.refreshToken
+    }
+  
+      
+      return session
+    },
+  
+    // async redirect({ url, baseUrl }) {
+    //   // Allows relative callback URLs
+    //   if (url.startsWith("/")) return `${baseUrl}${url}`
+    //   // Allows callback URLs on the same origin
+    //   else if (new URL(url).origin === baseUrl) return url
+    //   return baseUrl
+    // }
+    
   },
 });

@@ -1,12 +1,13 @@
 "use client";
 import { useSession } from "next-auth/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { FailedRegister } from "@/components/register.components";
 import { useInput } from "@/hooks/useInput";
+import { test } from "@/api/registerAPI";
 
 const Register = () => {
-  const { data: session } = useSession();
+  const { data: session }:any = useSession();
   const [registerData, setRegisterData] = useState({
     name: session?.user?.name as string,
     email: session?.user?.email as string,
@@ -17,6 +18,14 @@ const Register = () => {
     nickname: "",
   });
   const { onChange, onSubmit, values } = useInput(registerData);
+console.log(session?.accessToken)
+  useEffect(() => {
+    if(session){
+      test({user:session.user,accessToken:session.accessToken})
+    }
+    
+
+  },[session])
 
   const currentUrl = window.location.href;
   return (

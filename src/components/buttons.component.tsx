@@ -2,7 +2,12 @@
 
 import { signIn, signOut } from "next-auth/react";
 
+
+
 export function LoginButton({ site }: { site: string }) {
+
+
+
   return (
     <button
       style={{ marginRight: 10 }}
