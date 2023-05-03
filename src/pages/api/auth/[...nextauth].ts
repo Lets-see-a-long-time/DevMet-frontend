@@ -10,11 +10,10 @@ export default NextAuth({
     strategy: "jwt",
   },
   jwt: {
+    maxAge: 60 * 60 * 24 * 30,
     secret: "secret",
   },
-  pages: {
-    signIn: "/",
-  },
+
   providers: [
     KakaoProvider({
       clientId: process.env.NEXT_PUBLIC_KAKAO_KEY as string,
@@ -35,15 +34,14 @@ export default NextAuth({
   ],
   callbacks: {
     async session({ session, token, user }) {
-      // Send properties to the client, like an access_token from a provider.
-
-      // console.log("token", token);
       return session;
     },
+    async jwt({ token, user }: any) {
+      if (token) {
+        user = token;
+      }
 
-    async redirect({ url, baseUrl }) {
-      if (`${baseUrl}/api/auth/signout`) return baseUrl;
-      return `${baseUrl}/login/register`;
+      return user;
     },
   },
 });

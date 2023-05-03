@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { LoginButton, LogoutButton } from "@/components/buttons.component";
-import { getSession, useSession } from "next-auth/react";
+import { getSession, signOut, useSession } from "next-auth/react";
 import { useState } from "react";
 import { SessionTypes } from "@/types/SessionTypes";
 
@@ -25,6 +25,7 @@ function Login() {
             <LoginButton site="githup" />
             <LogoutButton />
           </div>
+          <button onClick={() => signOut()}>로그아웃하기</button>
         </>
       )}
     </div>

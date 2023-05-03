@@ -4,7 +4,10 @@ import { signIn, signOut } from "next-auth/react";
 
 export function LoginButton({ site }: { site: string }) {
   return (
-    <button style={{ marginRight: 10 }} onClick={() => signIn(site)}>
+    <button
+      style={{ marginRight: 10 }}
+      onClick={() => signIn(site, { callbackUrl: "/auth/register" })}
+    >
       {site}로그인
     </button>
   );
