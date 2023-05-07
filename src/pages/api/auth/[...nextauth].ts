@@ -5,6 +5,8 @@ import NaverProvider from 'next-auth/providers/naver';
 import GoogleProvider from 'next-auth/providers/google';
 import { redirect } from 'next/dist/server/api-utils';
 import axios from 'axios';
+import { registerUser } from '@/api/registerAPI';
+import { testUser } from '@/app/api/registerAPI';
 
 export default NextAuth({
   session: {
@@ -40,50 +42,43 @@ export default NextAuth({
   ],
   callbacks: {
     async jwt({ token, user, account }: any) {
-      // if (account) {
-      //   token.accessToken = account.access_token;
-      //   token.refreshToken = account.refresh_token;
-      // }
-      if (user) {
-        token.userId = user.id;
-      }
+      console.log('token', token);
+      console.log('user', user);
+      console.log('account', account);
 
-      // console.log('user', user);
-      // console.log('account', account);
+      // if (account?.accessToken) {
+      //   token.accessToken = account.accessToken;
+      // }
 
       return token;
     },
     async session({ session, token }: any) {
-      // if (token) {
-      //   session = {
-      //     ...session,
-      //     accessToken: token.accessToken,
-      //     refreshToken: token.refreshToken,
-      //   };
-      // }
-      // console.log('session', session);
-      // console.log('token', token);
+      if (token) {
+        session.user.id = token.sub;
+        // session.accessToken = token.accessToken;
+      }
 
-      session.user.id = token.userId; // 세션에 userId 프로퍼티 추가
-
-      const result = await axios
-        .post('http://localhost:3001/auth', {
+      if (session) {
+        registerUser;
+        // await axios
+        //   .post('http://localhost:3001/auth', {
+        //     userId: token.userId,
+        //     name: session.user.name,
+        //     email: session.user.email,
+        //     image: session.user.image,
+        //   })
+        //   .then(function (response) {
+        //     console.log(response);
+        //   });
+        const result = await testUser({
           userId: token.userId,
           name: session.user.name,
           email: session.user.email,
           image: session.user.image,
-        })
-        .then(function (response) {
-          console.log(response);
         });
-      console.log('result', result);
-
-      // await client.db().collection('auth').insertOne({ // DB에 유저 정보 추가
-      //   id: token.userId,
-      //   name: session.user.name,
-      //   email: session.user.email,
-      //   image: session.user.image,
-      // });
+        // console.log('result', result);
+        console.log('sesisson', session);
+      }
       return session;
     },
 
