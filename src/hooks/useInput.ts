@@ -1,5 +1,5 @@
-import { registerUser } from "@/api/registerAPI";
-import { AuthTypes } from "@/types/AuthTypes";
+import { registerUser } from "@/app/api/registerAPI";
+import { AuthTypes, HeaderTypes, RegisterTypes } from "@/types/AuthTypes";
 import { useRouter } from "next/router";
 
 import React, { useState, useCallback } from "react";
@@ -14,10 +14,14 @@ export const useInput = (states: AuthTypes) => {
     console.log(values);
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>, url: string) => {
+  const onSubmit = (
+    e: React.FormEvent<HTMLFormElement>,
+    url: string,
+    headers: HeaderTypes
+  ) => {
     e.preventDefault();
     if (url.includes("register")) {
-      registerUser({ ...values });
+      registerUser({ ...values }, headers);
     }
   };
 

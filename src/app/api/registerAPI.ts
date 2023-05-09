@@ -1,23 +1,25 @@
-import axios from 'axios';
-import type { RegisterTypes } from '@/types/RegisterTypes';
+import axios from "axios";
+import type { HeaderTypes, RegisterTypes } from "@/types/AuthTypes";
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3001/auth',
+  baseURL: "http://localhost:3001/auth",
   // headers: {
   //   Authorization:
   // }
 });
-export const registerUser = async (userInfo: RegisterTypes) => {
-  const response = await instance.post('/register', userInfo);
+export const registerUser = async (
+  userInfo: RegisterTypes,
+  headers: HeaderTypes
+) => {
+  const response = await instance.post("/register", userInfo, {
+    headers: {
+      Authorization: headers.AccessToken,
+    },
+  });
   return response;
 };
 
-export const testUser = async (userInfo: any) => {
-  const response = await instance.post('', userInfo);
-  return response;
-};
-
-export const testt = async (config: any) => {
-  const response = await instance.get('/test', config);
+export const getToken = async () => {
+  const response = await instance.get("/token");
   return response;
 };

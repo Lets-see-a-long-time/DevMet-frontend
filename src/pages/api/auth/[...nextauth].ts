@@ -1,26 +1,23 @@
-import NextAuth from 'next-auth/next';
-import KakaoProvider from 'next-auth/providers/kakao';
-import GithupProvider from 'next-auth/providers/github';
-import NaverProvider from 'next-auth/providers/naver';
-import GoogleProvider from 'next-auth/providers/google';
-import { redirect } from 'next/dist/server/api-utils';
-import axios from 'axios';
-import { registerUser } from '@/api/registerAPI';
-import { testUser } from '@/app/api/registerAPI';
+import NextAuth from "next-auth/next";
+import KakaoProvider from "next-auth/providers/kakao";
+import GithupProvider from "next-auth/providers/github";
+import NaverProvider from "next-auth/providers/naver";
+import GoogleProvider from "next-auth/providers/google";
+import { getToken } from "@/app/api/registerAPI";
 
 export default NextAuth({
   session: {
-    strategy: 'jwt',
+    strategy: "jwt",
   },
   jwt: {
     maxAge: 60 * 60 * 24 * 30,
-    secret: 'secret',
+    secret: "secret",
   },
 
-  secret: 'secret',
+  secret: "secret",
 
   pages: {
-    signIn: '/',
+    signIn: "/",
   },
   providers: [
     KakaoProvider({
@@ -41,50 +38,25 @@ export default NextAuth({
     }),
   ],
   callbacks: {
+    //우리가 만들어주는게 jwt인데 굳이 jwt를 써야하나 ?
     async jwt({ token, user, account }: any) {
-      console.log('token', token);
-      console.log('user', user);
-      console.log('account', account);
-
-      // if (account?.accessToken) {
-      //   token.accessToken = account.accessToken;
-      // }
-
       return token;
     },
-    async session({ session, token }: any) {
-      if (token) {
-        session.user.id = token.sub;
-        // session.accessToken = token.accessToken;
-      }
 
-      if (session) {
-        registerUser;
-        // await axios
-        //   .post('http://localhost:3001/auth', {
-        //     userId: token.userId,
-        //     name: session.user.name,
-        //     email: session.user.email,
-        //     image: session.user.image,
-        //   })
-        //   .then(function (response) {
-        //     console.log(response);
-        //   });
-        const result = await testUser({
-          userId: token.userId,
-          name: session.user.name,
-          email: session.user.email,
-          image: session.user.image,
-        });
-        // console.log('result', result);
-        console.log('sesisson', session);
+    async session({ session }: any) {
+      try {
+        const token = await getToken().then((res) => res.data);
+        session.accessToken = token;
+        return session;
+      } catch (err) {
+        console.log(err);
+        return null;
       }
-      return session;
     },
 
     async redirect({ url, baseUrl }) {
       // Allows relative callback URLs
-      if (url.startsWith('/')) return `${baseUrl}${url}`;
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
       // Allows callback URLs on the same origin
       else if (new URL(url).origin === baseUrl) return url;
       return baseUrl;

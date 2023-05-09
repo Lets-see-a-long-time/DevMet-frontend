@@ -1,47 +1,26 @@
-'use client';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import React from 'react';
-import { useEffect, useState } from 'react';
-import { FailedRegister } from '@/components/register.components';
-import { registerUser, testt, testUser } from '@/app/api/registerAPI';
-import { useInput } from '@/hooks/useInput';
+"use client";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import React from "react";
+import { useEffect, useState } from "react";
+import { FailedRegister } from "@/components/register.components";
+import { useInput } from "@/hooks/useInput";
+import { registerUser } from "@/app/api/registerAPI";
 
 const Register = () => {
   const { data: session }: any = useSession();
-  const router = useRouter();
+
   const [register, setRegister] = useState({
     name: session?.user?.name as string,
     email: session?.user?.email as string,
     image: session?.user?.image as string,
     expires: session?.user?.image as string,
-    role: '',
-    stack: '',
-    nickname: '',
+    role: "",
+    stack: "",
+    nickname: "",
   });
 
   const { onChange, onSubmit, values } = useInput(register);
-  useEffect(() => {
-    if (session) {
-      testt({ user: session.user, accessToken: session.accessToken });
-    }
-    // console.log('session.token', session.accessToken);
-  }, [session]);
-  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
-    setRegister({ ...register, [name]: value });
-  };
-
-  const registerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    registerUser({
-      ...register,
-      name: session?.user?.name || '',
-      email: session?.user?.email || '',
-      expires: session?.expires,
-      image: session?.user?.image || '',
-    });
-  };
 
   const currentUrl = window.location.href;
   return (
@@ -52,7 +31,7 @@ const Register = () => {
         <>
           11
           <div>여기는 레지스터</div>
-          <form onSubmit={(e) => onSubmit(e, currentUrl)}>
+          <form onSubmit={(e) => onSubmit(e, currentUrl, session.accessToken)}>
             <input
               type="text"
               name="role"
