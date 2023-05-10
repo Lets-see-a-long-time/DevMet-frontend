@@ -9,12 +9,6 @@ export default NextAuth({
   session: {
     strategy: "jwt",
   },
-  jwt: {
-    maxAge: 60 * 60 * 24 * 30,
-    secret: "secret",
-  },
-
-  secret: "secret",
 
   pages: {
     signIn: "/",
@@ -39,20 +33,42 @@ export default NextAuth({
   ],
   callbacks: {
     //우리가 만들어주는게 jwt인데 굳이 jwt를 써야하나 ?
-    async jwt({ token, user, account }: any) {
+    async jwt({ token, user, account, res }: any) {
+      if (user && account) {
+        user.provider = account.provider;
+        console.log("second", user, account);
+        //user -> userDTO
+        // const apiToken = await getToken();
+      }
+
+      // try {
+      //   const newToken = await getToken().then((res) => res.data);
+      //   token.accessToken = newToken;
+      //   return session;
+      // } catch (err) {
+      //   console.log(err);
+      //   return null;
+      // }
       return token;
     },
 
     async session({ session }: any) {
-      try {
-        const token = await getToken().then((res) => res.data);
-        session.accessToken = token;
-        return session;
-      } catch (err) {
-        console.log(err);
-        return null;
-      }
+      // try {
+      //   const token = await getToken().then((res) => res.data);
+      //   session.accessToken = token;
+      //   return session;
+      // } catch (err) {
+      //   console.log(err);
+      //   return null;
+      // }
+      return session;
     },
+    // async getSession() {
+    //   // 이곳에서 세션을 검색하고, user와 account 정보를 반환합니다.
+    //   // 세션 검색을 위한 API 호출이나 데이터베이스 쿼리 등이 포함될 수 있습니다.
+    //   // 결과를 Promise로 반환합니다.
+    //   return { user, account };
+    // },
 
     async redirect({ url, baseUrl }) {
       // Allows relative callback URLs

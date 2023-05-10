@@ -3,10 +3,11 @@ import type { HeaderTypes, RegisterTypes } from "@/types/AuthTypes";
 
 const instance = axios.create({
   baseURL: "http://localhost:3001/auth",
-  // headers: {
-  //   Authorization:
-  // }
+  headers: {
+    // Authorization: getCookie
+  },
 });
+
 export const registerUser = async (
   userInfo: RegisterTypes,
   headers: HeaderTypes
