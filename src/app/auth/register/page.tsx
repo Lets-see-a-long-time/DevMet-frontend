@@ -14,7 +14,6 @@ const Register = () => {
     name: session?.user?.name as string,
     email: session?.user?.email as string,
     image: session?.user?.image as string,
-    expires: session?.user?.image as string,
     role: "",
     stack: "",
     nickname: "",
@@ -31,7 +30,7 @@ const Register = () => {
         <>
           11
           <div>여기는 레지스터</div>
-          <form onSubmit={(e) => onSubmit(e, currentUrl, session.accessToken)}>
+          <form onSubmit={(e) => onSubmit(e, currentUrl, session.token)}>
             <input
               type="text"
               name="role"

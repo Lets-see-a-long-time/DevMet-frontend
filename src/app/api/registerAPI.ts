@@ -8,13 +8,10 @@ const instance = axios.create({
   },
 });
 
-export const registerUser = async (
-  userInfo: RegisterTypes,
-  headers: HeaderTypes
-) => {
+export const registerUser = async (userInfo: RegisterTypes, token: string) => {
   const response = await instance.post("/register", userInfo, {
     headers: {
-      Authorization: headers.AccessToken,
+      Authorization: token,
     },
   });
   return response;

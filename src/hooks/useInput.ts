@@ -17,11 +17,11 @@ export const useInput = (states: AuthTypes) => {
   const onSubmit = (
     e: React.FormEvent<HTMLFormElement>,
     url: string,
-    headers: HeaderTypes
+    token: string
   ) => {
     e.preventDefault();
     if (url.includes("register")) {
-      registerUser({ ...values }, headers);
+      registerUser({ ...values }, token);
     }
   };
 

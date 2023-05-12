@@ -49,10 +49,11 @@ export default NextAuth({
       //   console.log(err);
       //   return null;
       // }
+
       return token;
     },
 
-    async session({ session }: any) {
+    async session({ session }) {
       // try {
       //   const token = await getToken().then((res) => res.data);
       //   session.accessToken = token;

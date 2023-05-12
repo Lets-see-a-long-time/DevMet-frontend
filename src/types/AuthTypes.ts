@@ -2,7 +2,6 @@ export interface AuthTypes {
   name: string;
   email: string;
   image: string;
-  expires: string;
   role: string;
   stack: string;
   nickname: string;
@@ -24,9 +23,10 @@ export interface RegisterTypes {
   role: string;
   stack: string;
   nickname: string;
-  expires: string | undefined;
 }
 
 export interface HeaderTypes {
-  AccessToken: string;
+  headers: {
+    Authorization: string;
+  };
 }
