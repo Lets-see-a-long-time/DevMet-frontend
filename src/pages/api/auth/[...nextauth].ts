@@ -1,13 +1,14 @@
+
 import NextAuth from "next-auth/next";
 import KakaoProvider from "next-auth/providers/kakao";
 import GithupProvider from "next-auth/providers/github";
 import NaverProvider from "next-auth/providers/naver";
 import GoogleProvider from "next-auth/providers/google";
 import { signUser } from "@/app/api/registerAPI";
-import { setCookie } from "nookies";
-import { SessionTypes, TokenTypes } from "@/types/AuthTypes";
 
-export default NextAuth({
+
+const nextAuthOptions = (req, res) =>{
+ return {
   session: {
     strategy: "jwt",
   },
@@ -36,28 +37,24 @@ export default NextAuth({
   callbacks: {
     //우리가 만들어주는게 jwt인데 굳이 jwt를 써야하나 ?
     async jwt({ token, user, account }: any) {
-      const accessToken = await signUser(user);
+        console.log('token',token)
       if (user && account) {
         user.provider = account.provider;
-        console.log("token", accessToken.data.accessToken);
-        setCookie(null, "accessToken", accessToken.data.accessToken, {
-          maxAge: 5 * 60 * 60,
-          path: "/",
-          sameSite: "none",
-          // secure: true,
-          // httpOnly: true,
-          // domain:
-        });
-
-        //user -> userDTO
-        // const apiToken = await getToken();
+        const accessToken = await signUser(user);
+        token.userId = accessToken.data.userId;
+        token.accessToken=accessToken.data.accessToken;
+        console.log('accessToken',accessToken.data.accessToken)
+        res.setHeader("Set-Cookie", [
+          `access_token=${accessToken.data.accessToken};  Path=/`
+        ]);
+        
       }
-      token.userId = accessToken.data.userId;
-
+      
+      
       return token;
     },
 
-    async session({ session, token }) {
+    async session({ session, token }:any) {
       // try {
       //   const token = await getToken().then((res) => res.data);
       //   session.accessToken = token;
@@ -66,18 +63,14 @@ export default NextAuth({
       //   console.log(err);
       //   return null;
       // }
-      console.log(token, "session in token");
+      // console.log(token, "session in token");
+      session.accessToken = token.accessToken
       session.user.userId = token.userId;
       return session;
     },
-    // async getSession() {
-    //   // 이곳에서 세션을 검색하고, user와 account 정보를 반환합니다.
-    //   // 세션 검색을 위한 API 호출이나 데이터베이스 쿼리 등이 포함될 수 있습니다.
-    //   // 결과를 Promise로 반환합니다.
-    //   return { user, account };
-    // },
+ 
 
-    async redirect({ url, baseUrl }) {
+    async redirect({ url, baseUrl }:any) {
       // Allows relative callback URLs
       if (url.startsWith("/")) return `${baseUrl}${url}`;
       // Allows callback URLs on the same origin
@@ -85,4 +78,8 @@ export default NextAuth({
       return baseUrl;
     },
   },
-});
+ }
+};
+export default (req, res) => {
+  return NextAuth(req, res, nextAuthOptions(req, res))
+}

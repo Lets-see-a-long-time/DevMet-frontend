@@ -11,7 +11,7 @@ const instance = axios.create({
 export const registerUser = async (userInfo: RegisterTypes, token: string) => {
   const response = await instance.patch("/register", userInfo, {
     headers: {
-      Authorization: token,
+      Authorization: `Baerer ${token}`,
     },
   });
   return response;

@@ -8,16 +8,19 @@ import { useInput } from "@/hooks/useInput";
 import { registerUser } from "@/app/api/registerAPI";
 
 const Register = () => {
-  const { data: session }: any = useSession();
-  console.log(session);
+  const { data: session }:any = useSession();
+  
   const [register, setRegister] = useState({
-    userId: session.user.userId,
+    // session.user.userId
+    userId: '11',
     role: "",
     stack: "",
     nickname: "",
   });
 
   const { onChange, onSubmit, values } = useInput(register);
+
+  
 
   const currentUrl = window.location.href;
   return (
@@ -28,7 +31,7 @@ const Register = () => {
         <>
           11
           <div>여기는 레지스터</div>
-          <form onSubmit={(e) => onSubmit(e, currentUrl, session.token)}>
+          <form onSubmit={(e) => onSubmit(e, currentUrl, session.accessToken)}>
             <input
               type="text"
               name="role"
