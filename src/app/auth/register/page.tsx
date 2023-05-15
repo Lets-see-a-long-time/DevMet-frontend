@@ -9,11 +9,9 @@ import { registerUser } from "@/app/api/registerAPI";
 
 const Register = () => {
   const { data: session }: any = useSession();
-
+  console.log(session);
   const [register, setRegister] = useState({
-    name: session?.user?.name as string,
-    email: session?.user?.email as string,
-    image: session?.user?.image as string,
+    userId: session.user.userId,
     role: "",
     stack: "",
     nickname: "",

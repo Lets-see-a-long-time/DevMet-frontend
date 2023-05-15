@@ -1,7 +1,5 @@
 export interface AuthTypes {
-  name: string;
-  email: string;
-  image: string;
+  userId: string;
   role: string;
   stack: string;
   nickname: string;
@@ -16,18 +14,18 @@ export interface UserTypes {
 }
 
 export interface SessionTypes {
-  expires: string;
-  user: {
-    name: string;
-    email: string;
-    image: string;
+  session: {
+    expires: string;
+    user: {
+      name: string;
+      email: string;
+      image: string;
+    };
   };
 }
 
 export interface RegisterTypes {
-  name: string | undefined;
-  email: string | undefined;
-  image: string | null;
+  userId: string;
   role: string;
   stack: string;
   nickname: string;
@@ -37,4 +35,15 @@ export interface HeaderTypes {
   headers: {
     Authorization: string;
   };
+}
+
+export interface TokenTypes {
+  name: string;
+  email: string;
+  picture: string;
+  sub: string;
+  userId: string;
+  iat: number;
+  exp: number;
+  jti: string;
 }

@@ -1,18 +1,19 @@
-import NextAuth from 'next-auth/next';
-import KakaoProvider from 'next-auth/providers/kakao';
-import GithupProvider from 'next-auth/providers/github';
-import NaverProvider from 'next-auth/providers/naver';
-import GoogleProvider from 'next-auth/providers/google';
-import { signUser } from '@/app/api/registerAPI';
-import { setCookie } from 'nookies';
+import NextAuth from "next-auth/next";
+import KakaoProvider from "next-auth/providers/kakao";
+import GithupProvider from "next-auth/providers/github";
+import NaverProvider from "next-auth/providers/naver";
+import GoogleProvider from "next-auth/providers/google";
+import { signUser } from "@/app/api/registerAPI";
+import { setCookie } from "nookies";
+import { SessionTypes, TokenTypes } from "@/types/AuthTypes";
 
 export default NextAuth({
   session: {
-    strategy: 'jwt',
+    strategy: "jwt",
   },
 
   pages: {
-    signIn: '/',
+    signIn: "/",
   },
   providers: [
     KakaoProvider({
@@ -35,15 +36,14 @@ export default NextAuth({
   callbacks: {
     //우리가 만들어주는게 jwt인데 굳이 jwt를 써야하나 ?
     async jwt({ token, user, account }: any) {
+      const accessToken = await signUser(user);
       if (user && account) {
         user.provider = account.provider;
-        const accessToken = await signUser(user);
-        console.log('token', accessToken.data.accessToken);
-
-        setCookie(null, 'accessToken', accessToken.data.accessToken, {
+        console.log("token", accessToken.data.accessToken);
+        setCookie(null, "accessToken", accessToken.data.accessToken, {
           maxAge: 5 * 60 * 60,
-          path: '/',
-          sameSite: 'none',
+          path: "/",
+          sameSite: "none",
           // secure: true,
           // httpOnly: true,
           // domain:
@@ -52,20 +52,12 @@ export default NextAuth({
         //user -> userDTO
         // const apiToken = await getToken();
       }
-
-      // try {
-      //   const newToken = await getToken().then((res) => res.data);
-      //   token.accessToken = newToken;
-      //   return session;
-      // } catch (err) {
-      //   console.log(err);
-      //   return null;
-      // }
+      token.userId = accessToken.data.userId;
 
       return token;
     },
 
-    async session({ session }) {
+    async session({ session, token }) {
       // try {
       //   const token = await getToken().then((res) => res.data);
       //   session.accessToken = token;
@@ -74,6 +66,8 @@ export default NextAuth({
       //   console.log(err);
       //   return null;
       // }
+      console.log(token, "session in token");
+      session.user.userId = token.userId;
       return session;
     },
     // async getSession() {
@@ -85,7 +79,7 @@ export default NextAuth({
 
     async redirect({ url, baseUrl }) {
       // Allows relative callback URLs
-      if (url.startsWith('/')) return `${baseUrl}${url}`;
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
       // Allows callback URLs on the same origin
       else if (new URL(url).origin === baseUrl) return url;
       return baseUrl;
