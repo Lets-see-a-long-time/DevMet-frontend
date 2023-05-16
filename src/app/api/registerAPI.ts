@@ -1,15 +1,18 @@
-import axios from "axios";
-import type { HeaderTypes, RegisterTypes, UserTypes } from "@/types/AuthTypes";
+import axios from 'axios';
+import type { RegisterTypes, UserTypes } from '@/types/AuthTypes';
+import Cookies from 'js-cookie';
+
+const accessToken = Cookies.get('access_token');
 
 const instance = axios.create({
-  baseURL: "http://localhost:3001/auth",
+  baseURL: 'http://localhost:3001/auth',
   headers: {
-    // Authorization: getCookie
+    Authorization: `Bearer ${accessToken}`,
   },
 });
 
 export const registerUser = async (userInfo: RegisterTypes, token: string) => {
-  const response = await instance.patch("/register", userInfo, {
+  const response = await instance.patch('/register', userInfo, {
     headers: {
       Authorization: `Baerer ${token}`,
     },
@@ -18,6 +21,11 @@ export const registerUser = async (userInfo: RegisterTypes, token: string) => {
 };
 
 export const signUser = async (user: UserTypes) => {
-  const response = await instance.post("/", user);
+  const response = await instance.post('/', user);
+  return response;
+};
+
+export const testApi = async () => {
+  const response = await instance.get('/test');
   return response;
 };

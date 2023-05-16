@@ -1,26 +1,28 @@
-"use client";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import React from "react";
-import { useEffect, useState } from "react";
-import { FailedRegister } from "@/components/register.components";
-import { useInput } from "@/hooks/useInput";
-import { registerUser } from "@/app/api/registerAPI";
+'use client';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { useEffect, useState } from 'react';
+import { FailedRegister } from '@/components/register.components';
+import { useInput } from '@/hooks/useInput';
+import { registerUser, testApi } from '@/app/api/registerAPI';
 
 const Register = () => {
-  const { data: session }:any = useSession();
-  
+  const { data: session }: any = useSession();
+
   const [register, setRegister] = useState({
     // session.user.userId
     userId: '11',
-    role: "",
-    stack: "",
-    nickname: "",
+    role: '',
+    stack: '',
+    nickname: '',
   });
 
   const { onChange, onSubmit, values } = useInput(register);
 
-  
+  useEffect(() => {
+    testApi();
+  }, []);
 
   const currentUrl = window.location.href;
   return (
