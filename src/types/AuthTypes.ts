@@ -5,14 +5,6 @@ export interface AuthTypes {
   nickname: string;
 }
 
-export interface UserTypes {
-  id: string;
-  name: string;
-  email: string;
-  image: string;
-  provider: string;
-}
-
 export interface SessionTypes {
   session: {
     expires: string;

@@ -1,6 +1,7 @@
 import Main from "@/components/main.components";
+import { getUserList } from "./api/userAPI";
 
-export default function Home() {
+export default async function Home() {
   return (
     <>
       <Main />
