@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { RegisterTypes, UserTypes } from '@/types/AuthTypes';
+import type { RegisterTypes } from '@/types/AuthTypes';
 import Cookies from 'js-cookie';
 
 const accessToken = Cookies.get('access_token');

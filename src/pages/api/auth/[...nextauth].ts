@@ -40,7 +40,6 @@ const nextAuthOptions = (
     callbacks: {
       //우리가 만들어주는게 jwt인데 굳이 jwt를 써야하나 ?
       async jwt({ token, user, account }: any) {
-        console.log('token', token);
         if (user && account) {
           user.provider = account.provider;
           const accessToken = await signUser(user);
