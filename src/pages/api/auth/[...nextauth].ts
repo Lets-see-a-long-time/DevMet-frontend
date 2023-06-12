@@ -42,17 +42,20 @@ const nextAuthOptions = (
       async jwt({ token, user, account }: any) {
         if (user && account) {
           user.provider = account.provider;
+          
           const accessToken = await signUser(user);
           res.setHeader("Set-Cookie", [
             `access_token=${accessToken.data.accessToken};  Path=/`,
           ]);
+          
+          token.userId = accessToken.data.userId
         }
 
         return token;
       },
 
       async session({ session, token }: any) {
-        console.log(session);
+        session.user.userId = token.userId
         return session;
       },
 

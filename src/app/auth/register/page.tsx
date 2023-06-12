@@ -28,6 +28,20 @@ const Register = () => {
 
   const currentUrl = usePathname() as string;
 
+  useEffect(() => {
+    const eventSource = new EventSource('http://localhost:3001/notifications/');
+    eventSource.addEventListener('message', (event) => {
+      const data = JSON.parse(event.data);
+      // 받은 데이터 처리
+      console.log('Received SSE:', data);
+    });
+
+    return () => {
+      eventSource.close();
+    };
+  }, []);
+
+  
   return (
     <>
       {!session ? (
