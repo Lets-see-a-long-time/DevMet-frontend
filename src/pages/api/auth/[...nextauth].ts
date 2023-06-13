@@ -44,11 +44,12 @@ const nextAuthOptions = (
           user.provider = account.provider;
           
           const accessToken = await signUser(user);
-          res.setHeader("Set-Cookie", [
-            `access_token=${accessToken.data.accessToken};  Path=/`,
+          res.setHeader('Set-Cookie', [
+            `access_token=${accessToken.data.accessToken}; Path=/`,
+            `user_id=${accessToken.data.userId}; Path=/`,
           ]);
-          
-          token.userId = accessToken.data.userId
+          token.accessToken = accessToken.data.accessToken
+        
         }
 
         return token;
@@ -56,6 +57,8 @@ const nextAuthOptions = (
 
       async session({ session, token }: any) {
         session.user.userId = token.userId
+        
+        
         return session;
       },
 
