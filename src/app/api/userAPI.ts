@@ -1,8 +1,9 @@
-import { UserTypes } from "@/types/AuthTypes";
+
+import { UserTypes } from "@/types/UserTypes";
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:3001/user",
+  baseURL: `${process.env.NEXT_API_SERVER_URL}/user`,
 });
 
 export const getUserList = () => {
