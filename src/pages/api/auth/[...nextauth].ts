@@ -72,6 +72,7 @@ const nextAuthOptions = (
     },
   };
 };
+
 export default (req: NextApiRequest, res: NextApiResponse) => {
   return NextAuth(req, res, nextAuthOptions(req, res));
 };

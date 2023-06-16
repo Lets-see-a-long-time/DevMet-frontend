@@ -6,7 +6,7 @@ import { UserTypes } from '@/types/UserTypes';
 const accessToken = Cookies.get("access_token");
 
 const instance = axios.create({
-  baseURL: "http://localhost:3001/auth",
+  baseURL: process.env.NEXT_API_SERVER_URL,
   headers: {
     Authorization: `Bearer ${accessToken}`,
   },
