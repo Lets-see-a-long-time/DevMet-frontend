@@ -5,13 +5,14 @@ import React, { useContext } from 'react';
 import { useEffect, useState } from 'react';
 import { FailedRegister } from '@/components/register.components';
 import { useInput } from '@/hooks/useInput';
-import {  testApi } from '@/app/api/registerAPI';
+import { testApi } from '@/app/api/registerAPI';
 import { SocketContext } from '@/components/socketContext/socketContext';
 import { usePathname } from 'next/navigation';
 
 const Register = () => {
   const { data: session } = useSession();
   console.log('session', session);
+
   const socket = useContext(SocketContext);
   const [register, setRegister] = useState({
     // session.user.userId
@@ -30,9 +31,6 @@ const Register = () => {
   const currentUrl = usePathname() as string;
 
   useEffect(() => {
-  
-    
-    
     socket.on('message', (message) => {
       console.log('서버로부터 메시지 수신:', message);
       // 수신한 메시지에 대한 처리 로직 작성
@@ -46,7 +44,6 @@ const Register = () => {
     // 컴포넌트 언마운트 시 'message' 이벤트 핸들러 제거
     return () => {
       socket.off('message');
-      
     };
   }, []);
 
