@@ -3,7 +3,7 @@ import { UserTypes } from "@/types/UserTypes";
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: `${process.env.NEXT_API_SERVER_URL}/user`,
+  baseURL: `${process.env.NEXT_PUBLIC_API_SERVER_URL}/user`,
 });
 
 export const getUserList = () => {
