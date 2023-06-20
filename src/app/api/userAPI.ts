@@ -9,8 +9,12 @@ import { UserTypes } from "@/types/UserTypes";
 import axios from "axios";
 
 const instance = axios.create({
+<<<<<<< HEAD
   baseURL: `${process.env.NEXT_API_SERVER_URL}/user`,
 >>>>>>> 0b08203 (Refactor. api env)
+=======
+  baseURL: `${process.env.NEXT_PUBLIC_API_SERVER_URL}/user`,
+>>>>>>> 7eff893 (Add. env fixed)
 });
 
 export const getUserList = () => {
