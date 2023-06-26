@@ -12,9 +12,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ReactQueryProvider>
-          <SessionProvider>{children}</SessionProvider>
-        </ReactQueryProvider>
+        <SessionProvider>{children}</SessionProvider>
         <Link href={"/auth"}>로그인으로가</Link>
         <Link className="borderbox" href={"/user"}>
           유저페이지로가

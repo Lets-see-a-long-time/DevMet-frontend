@@ -7,14 +7,18 @@ import Search from "@/components/Search";
 import { useQuery } from "react-query";
 
 function UserTable() {
-  const { data } = useQuery({
-    queryKey: ["userData"],
-    queryFn: getUserList,
-  });
-  console.log(data);
+  // const { data } = useQuery({
+  //   queryKey: ["userData"],
+  //   queryFn: getUserList,
+  // });
+  const [data, setData] = useState<UserTypes[]>();
+
+  useEffect(() => {
+    getUserList().then((res) => setData(res.data));
+  }, []);
   return (
     <>
-      {/* <Search userData={data} />
+      <Search userData={data} />
       <table className="table-fixed">
         <thead>
           <tr>
@@ -58,7 +62,7 @@ function UserTable() {
             );
           })}
         </tbody>
-      </table> */}
+      </table>
     </>
   );
 }

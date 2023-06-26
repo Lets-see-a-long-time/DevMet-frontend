@@ -1,21 +1,23 @@
-'use client';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
-import React from 'react';
-import { useEffect, useState } from 'react';
-import { FailedRegister } from '@/components/register.components';
-import { useInput } from '@/hooks/useInput';
-import { registerUser, testApi } from '@/app/api/registerAPI';
+"use client";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import React from "react";
+import { useEffect, useState } from "react";
+import { FailedRegister } from "@/components/register.components";
+import { useInput } from "@/hooks/useInput";
+import { registerUser, testApi } from "@/app/api/registerAPI";
+import { usePathname } from "next/navigation";
 
 const Register = () => {
   const { data: session }: any = useSession();
 
+  console.log(session);
   const [register, setRegister] = useState({
     // session.user.userId
-    userId: '11',
-    role: '',
-    stack: '',
-    nickname: '',
+    role: "",
+    stack: "",
+    nickname: "",
+    expires: session?.expires,
   });
 
   const { onChange, onSubmit, values } = useInput(register);
@@ -24,7 +26,8 @@ const Register = () => {
     testApi();
   }, []);
 
-  const currentUrl = window.location.href;
+  const currentUrl = usePathname() as string;
+
   return (
     <>
       {!session ? (
@@ -33,7 +36,7 @@ const Register = () => {
         <>
           11
           <div>여기는 레지스터</div>
-          <form onSubmit={(e) => onSubmit(e, currentUrl, session.accessToken)}>
+          <form onSubmit={(e) => onSubmit(e, currentUrl)}>
             <input
               type="text"
               name="role"
