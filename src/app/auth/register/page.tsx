@@ -15,10 +15,10 @@ const Register = () => {
   const socket = useContext(SocketContext);
   const [register, setRegister] = useState({
     // session.user.userId
-    userId: '11',
-    role: '',
-    stack: '',
-    nickname: '',
+    role: "",
+    stack: "",
+    nickname: "",
+    expires: session?.expires,
   });
 
   const { onChange, onSubmit, values } = useInput(register);
@@ -27,6 +27,11 @@ const Register = () => {
     testApi();
   }, []);
 
+<<<<<<< HEAD
+=======
+  const currentUrl = usePathname() as string;
+
+>>>>>>> feat/user
   useEffect(() => {
     socket.on('message', (message) => {
       console.log('서버로부터 메시지 수신:', message);
@@ -44,7 +49,11 @@ const Register = () => {
     };
   }, []);
 
+<<<<<<< HEAD
   const currentUrl = window.location.href;
+=======
+  
+>>>>>>> feat/user
   return (
     <>
       {!session ? (
@@ -53,7 +62,11 @@ const Register = () => {
         <>
           11
           <div>여기는 레지스터</div>
+<<<<<<< HEAD
           {/* <form onSubmit={(e) => onSubmit(e, currentUrl, session.accessToken)}>
+=======
+          <form onSubmit={(e) => onSubmit(e, currentUrl)}>
+>>>>>>> feat/user
             <input
               type="text"
               name="role"
@@ -76,7 +89,11 @@ const Register = () => {
               className="w-24 border-1 border-current"
             />
             <button>회원가입완료</button>
+<<<<<<< HEAD
           </form> */}
+=======
+          </form> 
+>>>>>>> feat/user
         </>
       )}
     </>

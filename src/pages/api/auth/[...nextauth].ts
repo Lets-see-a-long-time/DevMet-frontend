@@ -1,11 +1,11 @@
-import NextAuth from 'next-auth/next';
-import KakaoProvider from 'next-auth/providers/kakao';
-import GithupProvider from 'next-auth/providers/github';
-import NaverProvider from 'next-auth/providers/naver';
-import GoogleProvider from 'next-auth/providers/google';
-import { signUser } from '@/app/api/registerAPI';
-import { NextApiRequest, NextApiResponse } from 'next';
-import { NextAuthOptions } from 'next-auth';
+import NextAuth from "next-auth/next";
+import KakaoProvider from "next-auth/providers/kakao";
+import GithupProvider from "next-auth/providers/github";
+import NaverProvider from "next-auth/providers/naver";
+import GoogleProvider from "next-auth/providers/google";
+import { signUser } from "@/app/api/registerAPI";
+import { NextApiRequest, NextApiResponse } from "next";
+import { NextAuthOptions } from "next-auth";
 
 const nextAuthOptions = (
   req: NextApiRequest,
@@ -13,11 +13,11 @@ const nextAuthOptions = (
 ): NextAuthOptions => {
   return {
     session: {
-      strategy: 'jwt',
+      strategy: "jwt",
     },
 
     pages: {
-      signIn: '/',
+      signIn: "/",
     },
     providers: [
       KakaoProvider({
@@ -64,7 +64,7 @@ const nextAuthOptions = (
 
       async redirect({ url, baseUrl }: any) {
         // Allows relative callback URLs
-        if (url.startsWith('/')) return `${baseUrl}${url}`;
+        if (url.startsWith("/")) return `${baseUrl}${url}`;
         // Allows callback URLs on the same origin
         else if (new URL(url).origin === baseUrl) return url;
         return baseUrl;

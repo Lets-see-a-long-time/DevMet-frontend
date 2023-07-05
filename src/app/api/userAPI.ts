@@ -1,5 +1,3 @@
-
-import { UserTypes } from "@/types/UserTypes";
 import axios from "axios";
 
 const instance = axios.create({
@@ -7,13 +5,13 @@ const instance = axios.create({
 });
 
 export const getUserList = () => {
-  return instance.get("/");
+  return instance.get("/list");
 };
 
 export const getUserDetatil = (id: string) => {
   return instance.get(`/${id}`);
 };
 
-export const updateUser = (id: string, user: UserTypes) => {
-  return instance.patch(`/${id}`, user);
+export const updateUser = (id: string) => {
+  return instance.patch(`/${id}`, {});
 };
