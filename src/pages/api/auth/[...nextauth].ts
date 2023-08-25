@@ -47,7 +47,7 @@ const nextAuthOptions = (
             `access_token=${accessToken.data.accessToken};  Path=/`,
           ]);
         }
-
+        console.log(token, user, account, "check");
         return token;
       },
 

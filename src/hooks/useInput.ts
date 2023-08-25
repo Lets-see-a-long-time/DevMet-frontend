@@ -1,7 +1,4 @@
 import { registerUser } from "@/app/api/registerAPI";
-import { AuthTypes, HeaderTypes, RegisterTypes } from "@/types/AuthTypes";
-import { useRouter } from "next/router";
-
 import React, { useState, useCallback } from "react";
 
 //커스텀 input에 어떤 타입을 지정해주면 좋을까?
