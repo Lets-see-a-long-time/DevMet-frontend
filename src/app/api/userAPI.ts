@@ -1,7 +1,12 @@
+// import axios from "axios";
+
+// const instance = axios.create({
+//   baseURL: "http://localhost:3001/auth/user",
+
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:3001/auth/user",
+  baseURL: `${process.env.NEXT_PUBLIC_API_SERVER_URL}/user`,
 });
 
 export const getUserList = () => {

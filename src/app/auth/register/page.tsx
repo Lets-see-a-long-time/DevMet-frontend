@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client";
 import { getSession, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -7,11 +8,24 @@ import { FailedRegister } from "@/components/register.components";
 import { useInput } from "@/hooks/useInput";
 import { registerUser, testApi } from "@/app/api/registerAPI";
 import { usePathname } from "next/navigation";
+=======
+'use client';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import React, { useContext } from 'react';
+import { useEffect, useState } from 'react';
+import { FailedRegister } from '@/components/register.components';
+import { useInput } from '@/hooks/useInput';
+import { testApi } from '@/app/api/registerAPI';
+import { SocketContext } from '@/components/socketContext/socketContext';
+import { usePathname } from 'next/navigation';
+>>>>>>> fb45a8a0bb8f0a1cff47af820c9fae4df38f86c1
 
 const Register = () => {
-  const { data: session }: any = useSession();
+  const { data: session } = useSession();
+  console.log('session', session);
 
-  console.log(session);
+  const socket = useContext(SocketContext);
   const [register, setRegister] = useState({
     // session.user.userId
     role: "",
@@ -28,6 +42,24 @@ const Register = () => {
 
   const currentUrl = usePathname() as string;
 
+  useEffect(() => {
+    socket.on('message', (message) => {
+      console.log('서버로부터 메시지 수신:', message);
+      // 수신한 메시지에 대한 처리 로직 작성
+    });
+
+    socket.on('notification', (message) => {
+      console.log('noti서버로부터 메시지 수신:', message);
+      // 수신한 메시지에 대한 처리 로직 작성
+    });
+
+    // 컴포넌트 언마운트 시 'message' 이벤트 핸들러 제거
+    return () => {
+      socket.off('message');
+    };
+  }, []);
+
+  
   return (
     <>
       {!session ? (
@@ -59,7 +91,7 @@ const Register = () => {
               className="w-24 border-1 border-current"
             />
             <button>회원가입완료</button>
-          </form>
+          </form> 
         </>
       )}
     </>

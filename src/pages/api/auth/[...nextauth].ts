@@ -42,17 +42,23 @@ const nextAuthOptions = (
       async jwt({ token, user, account }: any) {
         if (user && account) {
           user.provider = account.provider;
+          
           const accessToken = await signUser(user);
-          res.setHeader("Set-Cookie", [
-            `access_token=${accessToken.data.accessToken};  Path=/`,
+          res.setHeader('Set-Cookie', [
+            `access_token=${accessToken.data.accessToken}; Path=/`,
+            `user_id=${accessToken.data.userId}; Path=/`,
           ]);
+          token.accessToken = accessToken.data.accessToken
+        
         }
         console.log(token, user, account, "check");
         return token;
       },
 
       async session({ session, token }: any) {
-        console.log(session);
+        session.user.userId = token.userId
+        
+        
         return session;
       },
 
@@ -66,6 +72,7 @@ const nextAuthOptions = (
     },
   };
 };
+
 export default (req: NextApiRequest, res: NextApiResponse) => {
   return NextAuth(req, res, nextAuthOptions(req, res));
 };

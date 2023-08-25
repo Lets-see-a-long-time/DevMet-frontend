@@ -1,12 +1,12 @@
-import axios from "axios";
-import type { RegisterTypes } from "@/types/AuthTypes";
-import type { UserTypes } from "@/types/UserTypes";
-import Cookies from "js-cookie";
+import axios from 'axios';
+import type { RegisterTypes } from '@/types/AuthTypes';
+import Cookies from 'js-cookie';
+import { UserTypes } from '@/types/UserTypes';
 
 const accessToken = Cookies.get("access_token");
 
 const instance = axios.create({
-  baseURL: "http://localhost:3001/auth",
+  baseURL: `${process.env.NEXT_PUBLIC_API_SERVER_URL}/auth`,
   headers: {
     Authorization: `Bearer ${accessToken}`,
   },
