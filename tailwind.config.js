@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+const withMT = require("@material-tailwind/react/utils/withMT");
+
+module.exports = withMT({
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx}",
     "./src/components/**/*.{js,ts,jsx,tsx}",
@@ -18,7 +20,23 @@ module.exports = {
       borderWidth: {
         borderbox: "black",
       },
+      borderRadius: {
+        login: "30px",
+      },
+      width: {
+        login: "328px",
+        loginForm: "428px",
+      },
+      height: {
+        login: "50px",
+        loginForm: "546px",
+      },
+      backgroundColor: {
+        kakao: "#FEE500",
+        naver: "#2DB400",
+        google: "white",
+      },
     },
   },
   plugins: [],
-};
+});

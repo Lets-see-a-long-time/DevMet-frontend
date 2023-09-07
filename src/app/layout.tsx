@@ -13,10 +13,6 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <SessionProvider>{children}</SessionProvider>
-        <Link href={"/auth"}>로그인으로가</Link>
-        <Link className="borderbox" href={"/user"}>
-          유저페이지로가
-        </Link>
       </body>
     </html>
   );

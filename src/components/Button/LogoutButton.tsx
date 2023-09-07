@@ -1,18 +1,6 @@
 "use client";
-
-import { signIn, signOut } from "next-auth/react";
 import Cookies from "js-cookie";
-
-export function LoginButton({ site }: { site: string }) {
-  return (
-    <button
-      style={{ marginRight: 10 }}
-      onClick={() => signIn(site, { callbackUrl: "/auth/register" })}
-    >
-      {site}로그인
-    </button>
-  );
-}
+import { signOut } from "next-auth/react";
 
 export function LogoutButton() {
   return (
