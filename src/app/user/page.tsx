@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { getUserList } from "../api/userAPI";
 import { UserTypes } from "@/types/UserTypes";
-import Search from "@/components/Search";
+import Search from "@/components/Input/Search";
 import { useQuery } from "react-query";
 
 function UserTable() {
@@ -18,7 +18,7 @@ function UserTable() {
   }, []);
   return (
     <>
-      <Search userData={data} />
+      <Search />
       <table className="table-fixed">
         <thead>
           <tr>
