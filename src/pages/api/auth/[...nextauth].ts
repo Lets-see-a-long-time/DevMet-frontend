@@ -1,11 +1,11 @@
-import NextAuth from "next-auth/next";
-import KakaoProvider from "next-auth/providers/kakao";
-import GithupProvider from "next-auth/providers/github";
-import NaverProvider from "next-auth/providers/naver";
-import GoogleProvider from "next-auth/providers/google";
-import { signUser } from "@/app/api/registerAPI";
-import { NextApiRequest, NextApiResponse } from "next";
-import { NextAuthOptions } from "next-auth";
+import NextAuth from 'next-auth/next';
+import KakaoProvider from 'next-auth/providers/kakao';
+import GithupProvider from 'next-auth/providers/github';
+import NaverProvider from 'next-auth/providers/naver';
+import GoogleProvider from 'next-auth/providers/google';
+import { signUser } from '@/app/api/registerAPI';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { NextAuthOptions } from 'next-auth';
 
 const nextAuthOptions = (
   req: NextApiRequest,
@@ -13,11 +13,11 @@ const nextAuthOptions = (
 ): NextAuthOptions => {
   return {
     session: {
-      strategy: "jwt",
+      strategy: 'jwt',
     },
 
     pages: {
-      signIn: "/",
+      signIn: '/',
     },
     providers: [
       KakaoProvider({
@@ -42,29 +42,29 @@ const nextAuthOptions = (
       async jwt({ token, user, account }: any) {
         if (user && account) {
           user.provider = account.provider;
-          
+          console.log('user', user);
+          console.log('account', account);
           const accessToken = await signUser(user);
+          console.log('accessToken', accessToken);
           res.setHeader('Set-Cookie', [
             `access_token=${accessToken.data.accessToken}; Path=/`,
             `user_id=${accessToken.data.userId}; Path=/`,
           ]);
-          token.accessToken = accessToken.data.accessToken
-        
+          token.accessToken = accessToken.data.accessToken;
         }
 
         return token;
       },
 
       async session({ session, token }: any) {
-        session.user.userId = token.userId
-        
-        
+        session.user.userId = token.userId;
+
         return session;
       },
 
       async redirect({ url, baseUrl }: any) {
         // Allows relative callback URLs
-        if (url.startsWith("/")) return `${baseUrl}${url}`;
+        if (url.startsWith('/')) return `${baseUrl}${url}`;
         // Allows callback URLs on the same origin
         else if (new URL(url).origin === baseUrl) return url;
         return baseUrl;
