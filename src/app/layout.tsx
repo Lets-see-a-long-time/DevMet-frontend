@@ -1,9 +1,8 @@
-"use client";
-import Link from "next/link";
-import "./globals.css";
+import Link from 'next/link';
+import './globals.css';
+import ReactQueryProvider from './ReactQueryProvider';
+import SessionInjector from './SessionInjector';
 
-import { SessionProvider } from "next-auth/react";
-import ReactQueryProvider from "./ReactQueryProvider";
 export default function RootLayout({
   children,
 }: {
@@ -12,9 +11,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SessionProvider>{children}</SessionProvider>
-        <Link href={"/auth"}>로그인으로가</Link>
-        <Link className="borderbox" href={"/user"}>
+        <ReactQueryProvider>
+          <SessionInjector>{children}</SessionInjector>
+        </ReactQueryProvider>
+        <Link href={'/auth'}>로그인으로가</Link>
+        <Link className="borderbox" href={'/user'}>
           유저페이지로가
         </Link>
       </body>

@@ -1,24 +1,24 @@
-"use client";
-import React, { useState } from "react";
-import { useEffect } from "react";
-import { getUserList } from "../api/userAPI";
-import { UserTypes } from "@/types/UserTypes";
-import Search from "@/components/Search";
-import { useQuery } from "react-query";
+'use client';
+
+import React, { useState } from 'react';
+import { getUserDetatil } from '../api/userAPI';
+import { useQuery } from '@tanstack/react-query';
 
 function UserTable() {
-  // const { data } = useQuery({
-  //   queryKey: ["userData"],
-  //   queryFn: getUserList,
-  // });
-  const [data, setData] = useState<UserTypes[]>();
+  const { data } = useQuery({
+    queryKey: ['userData', 3],
+    queryFn: () => getUserDetatil(3),
+  });
+  console.log('data', data);
 
-  useEffect(() => {
-    getUserList().then((res) => setData(res.data));
-  }, []);
+  // const [data, setData] = useState<UserTypes[]>();
+
+  // useEffect(() => {
+  //   getUserList().then((res) => setData(res.data));
+  // }, []);
   return (
     <>
-      <Search userData={data} />
+      {/* <Search userData={data} />
       <table className="table-fixed">
         <thead>
           <tr>
@@ -62,7 +62,7 @@ function UserTable() {
             );
           })}
         </tbody>
-      </table>
+      </table> */}
     </>
   );
 }
