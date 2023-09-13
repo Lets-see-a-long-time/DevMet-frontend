@@ -18,6 +18,12 @@ module.exports = {
       borderWidth: {
         borderbox: "black",
       },
+      width: {
+        searchInput: "706px",
+      },
+      height: {
+        searchInput: "40px",
+      },
     },
   },
   plugins: [],
