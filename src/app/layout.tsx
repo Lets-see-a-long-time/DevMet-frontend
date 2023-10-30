@@ -5,6 +5,7 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import ReactQueryProvider from "./ReactQueryProvider";
 import TopNav from "@/components/Nav/TopNav";
+import SideNav from "@/components/Nav/SideNav";
 export default function RootLayout({
   children,
 }: {
@@ -14,7 +15,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <TopNav />
-        <SessionProvider>{children}</SessionProvider>
+        <div className="flex">
+          <SideNav />
+          <SessionProvider>{children}</SessionProvider>
+        </div>
       </body>
     </html>
   );
