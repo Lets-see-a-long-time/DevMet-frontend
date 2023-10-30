@@ -5,6 +5,7 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import ReactQueryProvider from "./ReactQueryProvider";
 import TopNav from "@/components/Nav/TopNav";
+import SideNav from "@/components/Nav/SideNav";
 export default function RootLayout({
   children,
 }: {
@@ -13,11 +14,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SessionProvider>{children}</SessionProvider>
-        <Link href={"/auth"}>로그인으로가</Link>
-        <Link className="borderbox" href={"/user"}>
-          유저페이지로가
-        </Link>
+        <TopNav />
+        <div className="flex">
+          <SideNav />
+          <SessionProvider>{children}</SessionProvider>
+        </div>
       </body>
     </html>
   );
