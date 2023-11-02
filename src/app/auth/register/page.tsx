@@ -1,24 +1,24 @@
-'use client';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
-import React, { useContext } from 'react';
-import { useEffect, useState } from 'react';
-import { FailedRegister } from '@/components/register.components';
-import { useInput } from '@/hooks/useInput';
-import { testApi } from '@/app/api/registerAPI';
-import { SocketContext } from '@/components/socketContext/socketContext';
-import { usePathname } from 'next/navigation';
+"use client";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import React, { useContext } from "react";
+import { useEffect, useState } from "react";
+import { FailedRegister } from "@/components/register.components";
+import { useInput } from "@/hooks/useInput";
+import { testApi } from "@/app/api/registerAPI";
+import { SocketContext } from "@/components/socketContext/socketContext";
+import { usePathname } from "next/navigation";
 
 const Register = () => {
   const { data: session } = useSession();
-  console.log('session', session);
+  console.log("session", session);
 
   const socket = useContext(SocketContext);
   const [register, setRegister] = useState({
     // session.user.userId
-    role: '',
-    stack: '',
-    nickname: '',
+    role: "",
+    stack: "",
+    nickname: "",
     expires: session?.expires,
   });
 
@@ -31,19 +31,19 @@ const Register = () => {
   const currentUrl = usePathname() as string;
 
   useEffect(() => {
-    socket.on('message', (message) => {
-      console.log('서버로부터 메시지 수신:', message);
+    socket.on("message", (message) => {
+      console.log("서버로부터 메시지 수신:", message);
       // 수신한 메시지에 대한 처리 로직 작성
     });
 
-    socket.on('notification', (message) => {
-      console.log('noti서버로부터 메시지 수신:', message);
+    socket.on("notification", (message) => {
+      console.log("noti서버로부터 메시지 수신:", message);
       // 수신한 메시지에 대한 처리 로직 작성
     });
 
     // 컴포넌트 언마운트 시 'message' 이벤트 핸들러 제거
     return () => {
-      socket.off('message');
+      socket.off("message");
     };
   }, []);
 
